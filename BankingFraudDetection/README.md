@@ -14,14 +14,12 @@ Technologies: Kafka, Spark Structured Streaming, PostgreSQL, Airflow, Ollama AI 
 ## Setup
 1. Install Python 3.9.6 and create virtual environment.
 
-### Create Virtual Environment
-python3.9 -m venv venv
+   Create Virtual Environment - python3.9 -m venv venv
 
-### Activate
-source venv/bin/activate
+   Activate - source venv/bin/activate
 
-2. install dependencies
-pip install -r requirements.txt
+2. Install dependencies
+   pip install -r requirements.txt
 
 3. Run Kafka & Zookeeper.
 4. Start Airflow and DAG.
