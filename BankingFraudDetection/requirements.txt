@@ -1,17 +1,7 @@
-# Core Python dependencies
+python_version == "3.9"
 python-dotenv==1.0.1
-
-# Kafka
 kafka-python==2.0.2
-
-# PostgreSQL
 psycopg2-binary==2.9.9
-
-# HTTP requests (for Ollama API)
 requests==2.31.0
-
-# Spark (PySpark)
 pyspark==3.5.0
-
-# Airflow 
 apache-airflow==2.9.3
