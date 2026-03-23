@@ -48,4 +48,4 @@ for _ in range(NUM_TRANSACTIONS):
 # Flush messages
 # ----------------------------------------
 producer.flush()
-print(f"\n✅ Sent {NUM_TRANSACTIONS} transactions to Kafka topic '{KAFKA_TOPIC}'"):wq!
+print(f"\n Sent {NUM_TRANSACTIONS} transactions to Kafka topic '{KAFKA_TOPIC}'")
