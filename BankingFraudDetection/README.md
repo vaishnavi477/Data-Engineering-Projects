@@ -11,19 +11,17 @@ Technologies: Kafka, Spark Structured Streaming, PostgreSQL, Airflow, Ollama AI 
 - AI enrichment provides concise fraud explanations.
 - Airflow DAG orchestrates the workflow.
 
-## Project Structure
-banking-fraud-detection-data-platform/
-├─ producer/ # Kafka transaction generator
-├─ spark_processor/ # Spark streaming scripts
-├─ ai_analysis/ # AI enrichment scripts
-├─ dags/ # Airflow DAGs
-├─ README.md
-├─ requirements.txt
-└─ .gitignore
-
 ## Setup
 1. Install Python 3.9.6 and create virtual environment.
-2. Install dependencies: `pip install -r requirements.txt`.
+# create virtual environment
+python3.9 -m venv venv
+
+# activate
+source venv/bin/activate
+
+2. install dependencies
+pip install -r requirements.txt
+
 3. Run Kafka & Zookeeper.
 4. Start Airflow and DAG.
 5. Run the pipeline: transactions -> Spark -> AI enrichment -> PostgreSQL.
