@@ -1,17 +1,36 @@
+# spark_stream.py
+
+import os
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import col, from_json, to_timestamp
 from pyspark.sql.types import StructType, StructField, IntegerType, StringType
 import psycopg2
+from dotenv import load_dotenv
 
 # ----------------------------------------
-# 0️⃣ Ensure Postgres Tables Exist
+# Load environment variables
+# ----------------------------------------
+load_dotenv()
+
+POSTGRES_DB = os.getenv("POSTGRES_DB", "banking")
+POSTGRES_USER = os.getenv("POSTGRES_USER", "nikitapatel")
+POSTGRES_PASSWORD = os.getenv("POSTGRES_PASSWORD", "Akash29")
+POSTGRES_HOST = os.getenv("POSTGRES_HOST", "localhost")
+POSTGRES_PORT = os.getenv("POSTGRES_PORT", 5432)
+
+KAFKA_BOOTSTRAP_SERVERS = os.getenv("KAFKA_BOOTSTRAP_SERVERS", "localhost:9092")
+KAFKA_TOPIC = os.getenv("KAFKA_TOPIC", "transactions")
+
+# ----------------------------------------
+# Ensure Postgres Tables Exist
 # ----------------------------------------
 def ensure_tables_exist():
     conn = psycopg2.connect(
-        dbname="banking",
-        user="nikitapatel",
-        password="Akash29",
-        host="localhost"
+        dbname=POSTGRES_DB,
+        user=POSTGRES_USER,
+        password=POSTGRES_PASSWORD,
+        host=POSTGRES_HOST,
+        port=POSTGRES_PORT
     )
     cur = conn.cursor()
 
@@ -48,16 +67,13 @@ def ensure_tables_exist():
 ensure_tables_exist()
 
 # ----------------------------------------
-# 1️⃣ Spark Session
+# Spark Session
 # ----------------------------------------
-spark = SparkSession.builder \
-    .appName("Banking Fraud Detection Pipeline") \
-    .getOrCreate()
-
+spark = SparkSession.builder.appName("Banking Fraud Detection Pipeline").getOrCreate()
 spark.sparkContext.setLogLevel("ERROR")
 
 # ----------------------------------------
-# 2️⃣ Kafka Transaction Schema
+# Kafka Transaction Schema
 # ----------------------------------------
 schema = StructType([
     StructField("transaction_id", IntegerType(), True),
@@ -69,17 +85,16 @@ schema = StructType([
 ])
 
 # ----------------------------------------
-# 3️⃣ Read Stream From Kafka
+# Read Stream From Kafka
 # ----------------------------------------
-kafka_df = spark.readStream \
-    .format("kafka") \
-    .option("kafka.bootstrap.servers", "localhost:9092") \
-    .option("subscribe", "transactions") \
+kafka_df = spark.readStream.format("kafka") \
+    .option("kafka.bootstrap.servers", KAFKA_BOOTSTRAP_SERVERS) \
+    .option("subscribe", KAFKA_TOPIC) \
     .option("startingOffsets", "earliest") \
     .load()
 
 # ----------------------------------------
-# 4️⃣ Convert Kafka Value to JSON
+# Convert Kafka Value to JSON
 # ----------------------------------------
 parsed_df = kafka_df.selectExpr("CAST(value AS STRING)") \
     .select(from_json(col("value"), schema).alias("data")) \
@@ -94,24 +109,23 @@ parsed_df = kafka_df.selectExpr("CAST(value AS STRING)") \
     )
 
 # ----------------------------------------
-# 5️⃣ Function to Write Batch to Postgres
+# Function to Write Batch to Postgres
 # ----------------------------------------
 def write_to_postgres(batch_df, batch_id, table_name):
     if batch_df.count() > 0:
         print(f"\nProcessing batch {batch_id} for table {table_name}")
         batch_df.show(truncate=False)
-        batch_df.write \
-            .format("jdbc") \
-            .option("url", "jdbc:postgresql://localhost:5432/banking") \
+        batch_df.write.format("jdbc") \
+            .option("url", f"jdbc:postgresql://{POSTGRES_HOST}:{POSTGRES_PORT}/{POSTGRES_DB}") \
             .option("dbtable", table_name) \
-            .option("user", "nikitapatel") \
-            .option("password", "Akash29") \
+            .option("user", POSTGRES_USER) \
+            .option("password", POSTGRES_PASSWORD) \
             .option("driver", "org.postgresql.Driver") \
             .mode("append") \
             .save()
 
 # ----------------------------------------
-# 6️⃣ Write all transactions to `transactions`
+# Write all transactions to `transactions`
 # ----------------------------------------
 all_txn_query = parsed_df.writeStream \
     .outputMode("append") \
@@ -119,7 +133,7 @@ all_txn_query = parsed_df.writeStream \
     .start()
 
 # ----------------------------------------
-# 7️⃣ Filter Fraud Transactions for `fraud_alerts`
+# Filter Fraud Transactions for `fraud_alerts`
 # ----------------------------------------
 fraud_df = parsed_df.filter(col("amount") > 3000)
 
@@ -129,11 +143,6 @@ fraud_query = fraud_df.writeStream \
     .start()
 
 # ----------------------------------------
-# 8️⃣ Keep Streams Running
+# Keep Streams Running
 # ----------------------------------------
-#all_txn_query.awaitTermination(120)
-#fraud_query.awaitTermination(120)
-
 spark.streams.awaitAnyTermination(timeout=120)
-
-
