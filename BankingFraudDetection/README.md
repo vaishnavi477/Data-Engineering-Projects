@@ -201,9 +201,7 @@ fraud_pipeline
 
 Execution flow:
 
-```text
 Transaction Generator → Spark Processing → AI Enrichment → Data Storage
-```
 
 ---
 
