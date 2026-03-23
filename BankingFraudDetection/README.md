@@ -13,7 +13,6 @@ Technologies: Kafka, Spark Structured Streaming, PostgreSQL, Airflow, Ollama AI 
 
 ## Project Structure
 banking-fraud-detection-data-platform/
-│
 ├─ producer/ # Kafka transaction generator
 ├─ spark_processor/ # Spark streaming scripts
 ├─ ai_analysis/ # AI enrichment scripts
