@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 # ----------------------------------------
 # Load environment variables
 # ----------------------------------------
-load_dotenv("/Users/nikitapatel/Desktop/Data Projects/Banking Fraud Detection Data Platform/.env")
+load_dotenv()
 
 PROJECT_PATH = os.getenv("PROJECT_PATH")
 PYTHON_PATH = os.getenv("PYTHON_PATH")
