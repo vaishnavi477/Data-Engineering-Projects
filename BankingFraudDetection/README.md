@@ -193,10 +193,20 @@ kafka-topics.sh --create \
 ```
 
 ### 7️⃣ Run the Pipeline
+```
+Initialize the db:
+airflow db init
+
+Create the user:
+airflow users create \
+    --username admin \
+    --firstname Vaishnavi \
+    --lastname Patil \
+    --role Admin \
+    --email admin@example.com
 
 Trigger the Airflow DAG:
 
-```
 fraud_pipeline
 
 Execution flow:
