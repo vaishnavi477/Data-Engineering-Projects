@@ -190,6 +190,7 @@ kafka-topics.sh --create \
 --bootstrap-server localhost:9092 \
 --partitions 1 \
 --replication-factor 1
+```
 
 ### 7️⃣ Run the Pipeline
 
@@ -197,12 +198,11 @@ Trigger the Airflow DAG:
 
 ```
 fraud_pipeline
-```
 
 Execution flow:
 
 Transaction Generator → Spark Processing → AI Enrichment → Data Storage
-
+```
 ---
 
 ## 📊 Output Tables
