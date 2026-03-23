@@ -1,0 +1,10 @@
+## Project Structure
+
+banking-fraud-detection-data-platform/
+├─ producer/   # Kafka transaction generator
+├─ spark_processor/   # Spark streaming scripts
+├─ ai_analysis/   # AI enrichment scripts
+├─ dags/   # Airflow DAGs
+├─ README.md
+├─ requirements.txt
+├─ project_structure.txt
