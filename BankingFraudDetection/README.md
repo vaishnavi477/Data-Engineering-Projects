@@ -13,10 +13,10 @@ Technologies: Kafka, Spark Structured Streaming, PostgreSQL, Airflow, Ollama AI 
 
 ## Setup
 1. Install Python 3.9.6 and create virtual environment.
-# create virtual environment
+Create Virtual Environment
 python3.9 -m venv venv
 
-# activate
+Activate
 source venv/bin/activate
 
 2. install dependencies
