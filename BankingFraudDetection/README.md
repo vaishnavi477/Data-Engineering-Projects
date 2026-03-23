@@ -93,7 +93,7 @@ Banking Fraud Detection Data Platform/
 ├── airflow/
 │   └── fraud_pipeline.py
 │
-├── .env.example
+├── .env
 ├── requirements.txt
 └── README.md
 ```
