@@ -153,6 +153,12 @@ KAFKA_TOPIC=transactions
 
 OLLAMA_API_URL=http://localhost:11434/api/generate
 OLLAMA_MODEL=llama3
+
+# Project paths
+PROJECT_PATH=/your_path/Banking Fraud Detection Data Platform
+PYTHON_PATH=/your_path/airflow_venv/bin/activate
+SPARK_PATH=spark-submit
+OLLAMA_PATH=/opt/homebrew/bin/ollama
 ```
 
 ---
