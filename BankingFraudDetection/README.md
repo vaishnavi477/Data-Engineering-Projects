@@ -182,12 +182,21 @@ Second terminal - airflow webserver --port 8081
 
 ---
 
-### 6️⃣ Run the Pipeline
+### 6️⃣ Before running the pipeline, create the Kafka topic:
+
+```bash
+kafka-topics.sh --create \
+--topic transactions \
+--bootstrap-server localhost:9092 \
+--partitions 1 \
+--replication-factor 1
+
+### 7️⃣ Run the Pipeline
 
 Trigger the Airflow DAG:
 
 ```
-fraud__pipeline
+fraud_pipeline
 ```
 
 Execution flow:
@@ -236,7 +245,6 @@ Stores AI-generated explanations for fraud cases.
 ## 🔐 Notes
 
 * `.env` is excluded from version control
-* `.env.example` is provided for setup
 * All credentials should be managed securely
 
 ---
