@@ -190,8 +190,7 @@ In a production environment:
 - Multiple partitions would be used for parallel processing
 - Higher replication factor ensures fault tolerance
 
-
-```bash
+Create:
 kafka-topics.sh --create \
 --topic transactions \
 --bootstrap-server localhost:9092 \
