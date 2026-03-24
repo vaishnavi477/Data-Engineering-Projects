@@ -182,7 +182,14 @@ Second terminal - airflow webserver --port 8081
 
 ---
 
-### 6️⃣ Before running the pipeline, create the Kafka topic:
+### 6️⃣ Before running the pipeline, create and verify the Kafka topic:
+```
+This topic is used to stream simulated banking transactions into the pipeline. 
+It acts as the ingestion layer for real-time processing.
+In a production environment:
+- Multiple partitions would be used for parallel processing
+- Higher replication factor ensures fault tolerance
+```
 
 ```bash
 kafka-topics.sh --create \
@@ -190,6 +197,13 @@ kafka-topics.sh --create \
 --bootstrap-server localhost:9092 \
 --partitions 1 \
 --replication-factor 1
+
+Verify:
+kafka-topics.sh --list --bootstrap-server localhost:9092
+
+Delete:
+kafka-topics --bootstrap-server localhost:9092 --delete --topic transactions
+
 ```
 
 ### 7️⃣ Run the Pipeline
