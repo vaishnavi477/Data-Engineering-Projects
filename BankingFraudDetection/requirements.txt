@@ -1,8 +1,21 @@
-python_version == "3.9"
-python-dotenv==1.0.1
+# Core Python packages
+python-dotenv==1.0.1          # load .env environment variables
+requests==2.31.0              # HTTP requests (for Ollama LLM API)
+
+# Kafka for real-time ingestion
 kafka-python==2.0.2
+
+# PostgreSQL database connector
 psycopg2-binary==2.9.9
-requests==2.31.0
+
+# Spark structured streaming
 pyspark==3.5.0
+
+# Airflow (use constraints file when installing)
 apache-airflow==2.9.3
-ollama version 1.0.0
+
+# Ollama client (Python wrapper for Ollama API, if used)
+ollama==1.0.0
+
+# Optional utilities
+python-dateutil>=2.8.2
