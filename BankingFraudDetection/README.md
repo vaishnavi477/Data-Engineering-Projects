@@ -189,7 +189,7 @@ It acts as the ingestion layer for real-time processing.
 In a production environment:
 - Multiple partitions would be used for parallel processing
 - Higher replication factor ensures fault tolerance
-```
+
 
 ```bash
 kafka-topics.sh --create \
