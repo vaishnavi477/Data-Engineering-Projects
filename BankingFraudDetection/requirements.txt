@@ -5,3 +5,4 @@ psycopg2-binary==2.9.9
 requests==2.31.0
 pyspark==3.5.0
 apache-airflow==2.9.3
+ollama version 1.0.0
