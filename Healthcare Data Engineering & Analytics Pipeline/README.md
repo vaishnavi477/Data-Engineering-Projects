@@ -123,7 +123,7 @@ python3 ge_validate.py
 ```bash
 python3 build_curated.py
 ```
-### Orchestrated Pipeline (Prefect)
+#### Orchestrated Pipeline (Prefect)
 
 Run entire pipeline:
 ```bash
