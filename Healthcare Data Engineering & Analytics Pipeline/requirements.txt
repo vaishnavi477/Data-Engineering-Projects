@@ -1,0 +1,8 @@
+pandas==2.2.2
+numpy==1.26.4
+faker==24.8.0
+psycopg2-binary==2.9.9
+dbt-core==1.7.14
+dbt-postgres==1.7.14
+great-expectations==0.18.22
+prefect==2.16.4
