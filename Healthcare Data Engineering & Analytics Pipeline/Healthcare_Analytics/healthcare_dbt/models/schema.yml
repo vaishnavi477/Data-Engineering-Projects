@@ -1,0 +1,153 @@
+version: 2
+
+sources:
+  - name: deidentified
+    schema: deidentified
+    description: "De-identified healthcare data (HIPAA Safe Harbor)"
+    tables:
+      - name: patients
+        description: "Patient demographic data"
+        columns:
+          - name: patient_key
+            description: "Unique de-identified patient key"
+            tests:
+              - not_null
+              - unique
+          - name: age
+            description: "Derived age from DOB"
+            tests:
+              - dbt_utils.accepted_range:
+                  min_value: 0
+                  max_value: 120
+
+      - name: encounters
+        description: "Patient encounters"
+        columns:
+          - name: encounter_id
+            tests:
+              - not_null
+              - unique
+          - name: patient_key
+            tests:
+              - not_null
+              - relationships:
+                  to: source('deidentified','patients')
+                  field: patient_key
+          - name: total_cost
+            tests:
+              - not_null
+              - dbt_utils.accepted_range:
+                  min_value: 0
+
+models:
+  - name: stg_patients
+    description: "Cleaned patient dataset"
+    columns:
+      - name: patient_key
+        tests:
+          - not_null
+          - unique
+      - name: age
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 120
+      - name: age_group
+        tests:
+          - not_null
+
+  - name: stg_encounters
+    description: "Standardized encounters dataset"
+    columns:
+      - name: encounter_id
+        tests:
+          - not_null
+          - unique
+      - name: patient_key
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_patients')
+              field: patient_key
+      - name: length_of_stay
+        description: "Days between admit and discharge"
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 30
+      - name: total_cost
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+
+# ---------------------------
+# MART (CURATED LAYER)
+# ---------------------------
+  - name: fct_patient_utilization
+    description: "Aggregated patient utilization metrics"
+    columns:
+      - name: patient_key
+        tests: [not_null, unique]
+
+      - name: visit_count
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 1
+
+      - name: avg_cost
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+
+      - name: total_cost
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+
+      - name: max_cost
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+
+      - name: min_cost
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+
+      - name: avg_los
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 30
+
+      - name: risk_segment
+        tests:
+          - accepted_values:
+              values: ['low_risk','medium_risk','high_risk']
+
+# ---------------------------
+# CUSTOM DATA QUALITY TESTS
+# ---------------------------
+tests:
+  - name: valid_cost_hierarchy
+    description: "Ensure min_cost <= avg_cost <= max_cost"
+    sql: |
+      select *
+      from {{ ref('fct_patient_utilization') }}
+      where not (min_cost <= avg_cost and avg_cost <= max_cost)
+
+  - name: no_extreme_total_cost
+    description: "Detect unusually high total costs"
+    sql: |
+      select *
+      from {{ ref('fct_patient_utilization') }}
+      where total_cost > 1000000
+
+  - name: no_negative_los
+    description: "Ensure no negative length of stay"
+    sql: |
+      select *
+      from {{ ref('stg_encounters') }}
+      where length_of_stay < 0
