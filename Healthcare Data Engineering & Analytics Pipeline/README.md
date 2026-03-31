@@ -15,20 +15,19 @@ It demonstrates end-to-end data engineering skills including:
 
 ## Architecture
 
-
-  RAW (PHI Data)
-  ↓
-  De-identification (HIPAA Safe Harbor)
-  ↓
-  PostgreSQL (Data Warehouse)
-  ↓
-  dbt (Staging + Transformations)
-  ↓
-  Curated Layer (Analytics-ready)
-  ↓
-  Data Quality (dbt + Great Expectations)
-  ↓
-  Export for BI / ML
+Raw (PHI)
+↓
+De-identification (HIPAA Safe Harbor)
+↓
+PostgreSQL Warehouse (raw + deidentified schemas)
+↓
+dbt (Staging → Marts)
+↓
+Curated Layer (Analytics-ready)
+↓
+Data Quality (dbt + Great Expectations)
+↓
+Consumption (BI / ML)
 
 
 ---
@@ -60,23 +59,48 @@ Healthcare_Analytics/
 │
 └── README.md
 
-
 ---
 
-## HIPAA Compliance (Key Feature)
+## What This Project Demonstrates
 
-This project demonstrates **Safe Harbor de-identification**:
+- Designing HIPAA-compliant data pipelines
+- Building layered data architecture (raw → staging → curated)
+- Writing production-grade dbt models and tests
+- Implementing data quality frameworks
+- Orchestrating pipelines with retries and failure handling
+- Working with healthcare-style data (claims, encounters, providers)
 
-Removed fields:
+## Environment Configuration
+
+Sensitive values and paths are managed using `.env`:
+
+- Base project path
+- Database credentials
+- Script paths
+
+This ensures:
+- Security
+- Portability
+- Clean codebase (no hardcoded values)
+
+## HIPAA Compliance (Safe Harbor Implementation)
+
+This project implements HIPAA Safe Harbor de-identification:
+
+### Direct Identifiers Removed
 - Name
 - SSN
 - Email
-- Phone
+- Phone number
 - Address
 
-Transformed:
-- DOB → Age + Age Group
-- Patient ID → Hashed surrogate key
+### Transformations Applied
+- DOB → Age + Age Groups (to prevent re-identification)
+- Patient ID → SHA256 hashed surrogate key (`patient_key`)
+
+### Data Segregation
+- `raw` schema → Restricted PHI access
+- `deidentified` schema → Analytics-safe data
 
 ---
 
@@ -93,6 +117,7 @@ Transformed:
 ---
 
 ## Pipeline Execution
+The pipeline can be executed either step-by-step or fully orchestrated.
 
 1️⃣ Generate PHI Data
 ```bash
@@ -162,14 +187,39 @@ Includes:
 - Risk segment validation
 - Business Logic
 
-Risk segmentation:
+## Business Logic
+
+Risk Segmentation
 
 - High Risk
   - visit_count > 10 OR avg_cost > 8000 OR avg_los > 7
+
 - Medium Risk
-  - moderate utilization
+  - visit_count between 5–10 OR avg_cost between 4000–8000
+
 - Low Risk
-  - low utilization & cost
+  - low utilization and cost
+ 
+ ---
+ 
+Data Quality Framework
+
+dbt Tests (Schema-Level)
+- Not null constraints
+- Unique constraints
+- Referential integrity
+- Accepted value ranges
+
+---
+
+Great Expectations (Business-Level)
+- Date consistency (admit vs discharge)
+- Non-negative cost validation
+- Length of stay constraints
+- Risk segment validation
+- Aggregation sanity checks
+
+---
 
 Key Highlights
 - End-to-end healthcare pipeline
@@ -177,6 +227,8 @@ Key Highlights
 - Real-world data modeling
 - Production-style orchestration
 - Multi-layer data validation
+
+---
 
 Future Improvements
 - Add Airflow orchestration
