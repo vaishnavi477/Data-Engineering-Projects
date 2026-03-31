@@ -11,8 +11,6 @@ It demonstrates end-to-end data engineering skills including:
 - Data quality checks (dbt tests + Great Expectations)
 - Workflow orchestration using Prefect
 
----
-
 ## Architecture
 
 Raw (PHI)
@@ -29,8 +27,6 @@ Data Quality (dbt + Great Expectations)
 ↓
 Consumption (BI / ML)
 
-
----
 
 ## Project Structure
 
@@ -53,13 +49,11 @@ Healthcare_Analytics/
 ├── generate_healthcare_data.py
 ├── deidentify_pipeline.py
 ├── load_psql.py
-├── ge_validate.py
 ├── build_curated.py
+├── ge_validate.py
 ├── prefect_pipeline.py # Orchestration pipeline
 │
 └── README.md
-
----
 
 ## What This Project Demonstrates
 
@@ -102,8 +96,6 @@ This project implements HIPAA Safe Harbor de-identification:
 - `raw` schema → Restricted PHI access
 - `deidentified` schema → Analytics-safe data
 
----
-
 ## Technologies Used
 
 - Python 3.11
@@ -113,8 +105,6 @@ This project implements HIPAA Safe Harbor de-identification:
 - Prefect (Workflow Orchestration)
 - Pandas / NumPy
 - Faker (Synthetic Data)
-
----
 
 ## Pipeline Execution
 The pipeline can be executed either step-by-step or fully orchestrated.
@@ -154,6 +144,8 @@ Run entire pipeline:
 ```bash
 python3 prefect_pipeline.py
 ```
+---
+
 Features:
 
 Task retries
@@ -166,6 +158,8 @@ Data Models
   - stg_encounters
 2. Mart Layer
   - fct_patient_utilization
+
+--- 
 
 Includes:
 
@@ -236,8 +230,6 @@ Future Improvements
 - Add dashboard (Tableau / Power BI)
 - Add ML model for readmission prediction
 
----
-
-Author
+## Author
 
 Vaishnavi Patil
