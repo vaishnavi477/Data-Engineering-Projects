@@ -130,13 +130,13 @@ dbt run
 ```bash
 dbt test
 ```
-6️⃣ Data Validation (Great Expectations)
-```bash
-python3 ge_validate.py
-```
-7️⃣ Export Curated Data
+6️⃣ Export Curated Data
 ```bash
 python3 build_curated.py
+```
+7️⃣ Data Validation (Great Expectations)
+```bash
+python3 ge_validate.py
 ```
 #### Orchestrated Pipeline (Prefect)
 
