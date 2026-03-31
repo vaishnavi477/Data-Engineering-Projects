@@ -127,7 +127,7 @@ python3 build_curated.py
 
 Run entire pipeline:
 ```bash
-python3 pipeline_prefect.py
+python3 prefect_pipeline.py
 ```
 Features:
 
