@@ -1,9 +1,9 @@
 # Healthcare Data Engineering & Analytics Pipeline (HIPAA-Compliant)
 
 ## Overview
-This project simulates a real-world **healthcare data platform** handling PHI (Protected Health Information) with HIPAA-compliant de-identification, transformation, validation, and orchestration.
+This project simulates a real-world healthcare data platform handling PHI (Protected Health Information) with HIPAA-compliant de-identification, transformation, validation, and orchestration.
 
-It demonstrates **end-to-end data engineering skills** including:
+It demonstrates end-to-end data engineering skills including:
 - Data generation (synthetic PHI)
 - De-identification (HIPAA Safe Harbor)
 - Data warehousing (PostgreSQL)
@@ -92,7 +92,7 @@ Transformed:
 
 ---
 
-## 🚀 Pipeline Execution
+## Pipeline Execution
 
 1️⃣ Generate PHI Data
 ```bash
@@ -137,51 +137,56 @@ Failure handling
 Modular tasks
 Data Models
 1. Staging Layer
-  stg_patients
-  stg_encounters
+  - stg_patients
+  - stg_encounters
 2. Mart Layer
-  fct_patient_utilization
+  - fct_patient_utilization
 
 Includes:
 
-Visit count
-Average cost
-Total cost
-Length of stay
-Risk segmentation
-Data Quality Checks
-dbt Tests
-Not null
-Unique
-Relationships
-Accepted ranges
-Great Expectations
-Date validation
-Cost validation
-Length of stay checks
-Risk segment validation
-Business Logic
+- Visit count
+- Average cost
+- Total cost
+- Length of stay
+- Risk segmentation
+- Data Quality Checks
+   - dbt Tests
+   - Not null
+   - Unique
+- Relationships
+- Accepted ranges
+- Great Expectations
+- Date validation
+- Cost validation
+- Length of stay checks
+- Risk segment validation
+- Business Logic
 
 Risk segmentation:
 
-High Risk
-visit_count > 10 OR avg_cost > 8000 OR avg_los > 7
-Medium Risk
-moderate utilization
-Low Risk
-low utilization & cost
+- High Risk
+  - visit_count > 10 OR avg_cost > 8000 OR avg_los > 7
+- Medium Risk
+  - moderate utilization
+- Low Risk
+  - low utilization & cost
+
 Key Highlights
-End-to-end healthcare pipeline
-HIPAA-compliant data handling
-Real-world data modeling
-Production-style orchestration
-Multi-layer data validation
+- End-to-end healthcare pipeline
+- HIPAA-compliant data handling
+- Real-world data modeling
+- Production-style orchestration
+- Multi-layer data validation
+
 Future Improvements
-Add Airflow orchestration
-Deploy on AWS/GCP
-Add dashboard (Tableau / Power BI)
-Add ML model for readmission prediction
-👤 Author
+- Add Airflow orchestration
+- Deploy on AWS/GCP
+- Add dashboard (Tableau / Power BI)
+- Add ML model for readmission prediction
+
+---
+
+Author
 
 Vaishnavi Patil
 
@@ -202,3 +207,4 @@ dbt-postgres==1.7.14
 great-expectations==0.18.22
 
 prefect==2.16.4
+```
