@@ -19,11 +19,11 @@ Kafka → Spark Structured Streaming → PostgreSQL → Airflow → LLM (Ollama)
 
 Key Features:
 
-Real-time transaction ingestion using Kafka
-Fraud detection using Spark Structured Streaming
-AI-based explainability using Llama3
-Workflow orchestration using Airflow
-Scalable and fault-tolerant design
+  - Real-time transaction ingestion using Kafka
+  - Fraud detection using Spark Structured Streaming
+  - AI-based explainability using Llama3
+  - Workflow orchestration using Airflow
+  - Scalable and fault-tolerant design
 
 Tech Stack:
 Kafka, Spark, Python, PostgreSQL, Airflow, Ollama
@@ -38,11 +38,11 @@ Raw Data → De-identification → PostgreSQL → dbt → Data Quality → Prefe
 
 Key Features:
 
-HIPAA Safe Harbor de-identification
-Layered data architecture (raw → staging → marts → curated)
-Data transformation using dbt
-Data validation using dbt tests and Great Expectations
-Workflow orchestration using Prefect
+  - HIPAA Safe Harbor de-identification
+  - Layered data architecture (raw → staging → marts → curated)
+  - Data transformation using dbt
+  - Data validation using dbt tests and Great Expectations
+  - Workflow orchestration using Prefect
 
 Tech Stack:
 Python, PostgreSQL, dbt, Great Expectations, Prefect
