@@ -1,17 +1,15 @@
-🚀 Overview
+# 🚀 Overview
 
-This repository showcases end-to-end data engineering projects covering real-time streaming, batch processing, data modeling, data quality, and workflow orchestration.
-
+This repository showcases end-to-end data engineering projects covering real-time streaming, batch processing, data modeling, data quality, and workflow orchestration. 
 The projects demonstrate production-grade design patterns including:
+  - Scalable data pipelines (batch + streaming)
+  - Workflow orchestration
+  - Data quality and validation
+  - Secure and compliant data handling
+  - Integration of modern tools across the data stack
 
-Scalable data pipelines (batch + streaming)
-Workflow orchestration
-Data quality and validation
-Secure and compliant data handling
-Integration of modern tools across the data stack
-
-🏗️ Projects Included
-🏦 Banking Fraud Detection Data Platform (Real-Time)
+# 🏗️ Projects Included
+## 🏦 Banking Fraud Detection Data Platform (Real-Time)
 
 Overview:
 A real-time streaming pipeline that ingests banking transactions, detects fraud, and generates AI-powered explanations.
@@ -30,7 +28,7 @@ Scalable and fault-tolerant design
 Tech Stack:
 Kafka, Spark, Python, PostgreSQL, Airflow, Ollama
 
-🏥 Healthcare Data Engineering Pipeline (Batch + Analytics)
+## 🏥 Healthcare Data Engineering Pipeline (Batch + Analytics)
 
 Overview:
 A HIPAA-compliant data pipeline that processes healthcare data from raw ingestion to analytics-ready datasets.
